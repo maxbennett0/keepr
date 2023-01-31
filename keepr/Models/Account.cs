@@ -12,3 +12,8 @@ public class Profile : Account
   public string Email { get; set; }
 
 }
+
+public class Vaultist : Profile
+{
+  public int VaultKeepId { get; set; }
+}

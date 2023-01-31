@@ -5,12 +5,16 @@ namespace keepr.Controllers;
 public class VaultsController : ControllerBase
 {
   private readonly VaultsService _vaultsService;
+  private readonly KeepsService _keepsService;
+  private readonly VaultKeepsService _vkService;
   private readonly Auth0Provider _auth;
 
-  public VaultsController(VaultsService vaultsService, Auth0Provider auth)
+  public VaultsController(VaultsService vaultsService, Auth0Provider auth, VaultKeepsService vkService, KeepsService keepsService = null)
   {
     _vaultsService = vaultsService;
     _auth = auth;
+    _keepsService = keepsService;
+    _vkService = vkService;
   }
 
   [HttpPost]
@@ -73,6 +77,21 @@ public class VaultsController : ControllerBase
       Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
       string message = _vaultsService.Remove(id, userInfo?.Id);
       return Ok(message);
+    }
+    catch (Exception e)
+    {
+      return BadRequest(e.Message);
+    }
+  }
+
+  [HttpGet("{id}/keeps")]
+  public async Task<ActionResult<List<MyKeeps>>> GetKeepsInVault(int id)
+  {
+    try
+    {
+      Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+      List<MyKeeps> keeps = _vkService.GetKeepsInVault(id, userInfo?.Id);
+      return Ok(keeps);
     }
     catch (Exception e)
     {

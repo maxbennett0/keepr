@@ -33,6 +33,12 @@ public class KeepsService
     return keeps;
   }
 
+  internal List<Keep> GetKeepsByProfile(string accountId)
+  {
+    List<Keep> keeps = _repo.GetKeepsByProfile(accountId);
+    return keeps;
+  }
+
   internal Keep GetOne(int id, string userId)
   {
     Keep keep = _repo.GetOne(id);
@@ -40,10 +46,7 @@ public class KeepsService
     {
       throw new Exception($"there isnt a cult at this id: ${id}");
     }
-    if (keep.CreatorId != userId)
-    {
-      throw new Exception("you dont own that, so why did you try to get it?");
-    }
+    keep.Views++;
     return keep;
   }
 

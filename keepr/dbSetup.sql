@@ -31,6 +31,10 @@ CREATE TABLE
         FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
     ) default charset utf8 COMMENT '';
 
+DROP TABLE vaults;
+
+DROP TABLE keeps;
+
 CREATE TABLE
     vaultkeeps(
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -41,3 +45,24 @@ CREATE TABLE
         Foreign Key (vaultId) REFERENCES vaults(id) ON DELETE CASCADE,
         Foreign Key (keepId) REFERENCES keeps(id) ON DELETE CASCADE
     ) default charset utf8 COMMENT '';
+
+DROP TABLE vaultkeeps;
+
+SELECT keeps.*, vaultkeeps.*
+FROM vaultkeeps
+    JOIN keeps ON keeps.id = vaultkeeps.`keepId`
+WHERE vaultkeeps.keepId = 5;
+
+SELECT * FROM accounts WHERE id = "638a4290b124aedd65c6ab55";
+
+SELECT *
+FROM keeps
+    JOIN accounts ON accounts.id = keeps.creatorId
+WHERE
+    keeps.creatorId = "638a4290b124aedd65c6ab55";
+
+      SELECT
+    !`isPrivate`
+    FROM vaults
+    JOIN accounts ON accounts.id = vaults.creatorId
+    WHERE vaults.creatorId = "638a4290b124aedd65c6ab55";

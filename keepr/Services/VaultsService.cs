@@ -34,11 +34,17 @@ public class VaultsService
     {
       throw new Exception("no vault here. this isnt fallout.");
     }
-    if (vault.CreatorId != userId)
+    if (vault.IsPrivate == true && vault.CreatorId != userId)
     {
-      throw new Exception("dont try to steal vaults that aren't yours");
+      throw new Exception("this is private you ding dong. plus you arent logged in");
     }
     return vault;
+  }
+
+  internal List<Vault> GetProfileVaults(string accountId)
+  {
+    List<Vault> vaults = _repo.GetProfileVaults(accountId);
+    return vaults;
   }
 
   internal string Remove(int id, string userId)
