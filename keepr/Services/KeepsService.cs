@@ -22,6 +22,10 @@ public class KeepsService
     original.Name = keepData.Name ?? original.Name;
     original.Description = keepData.Description ?? original.Description;
     original.Img = keepData.Img ?? original.Img;
+    if (keepData.CreatorId != original.CreatorId)
+    {
+      original.Kept = keepData.Kept;
+    }
 
     _repo.Update(original);
     return original;

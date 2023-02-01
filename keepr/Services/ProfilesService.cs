@@ -9,9 +9,9 @@ public class ProfilesService
     _repo = repo;
   }
 
-  internal Profile GetProfileById(string accountId)
+  internal Account GetProfileById(string accountId)
   {
-    Profile profile = _repo.GetProfileById(accountId);
+    Account profile = _repo.GetProfileById(accountId);
     if (profile == null)
     {
       throw new Exception("no id for that profile");

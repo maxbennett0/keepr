@@ -1,44 +1,48 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 bg-white rounded elevation-3">
-      <img
-        src="https://bcw.blob.core.windows.net/public/img/8600856373152463"
-        alt="CodeWorks Logo"
-        class="rounded-circle"
-      >
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
+  <div class="container-fluid">
+    <div class="masonry my-5">
+      <div v-for="k in keeps">
+        <KeepCard :keep="k" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { onMounted, computed } from "vue";
+import { AppState } from "../AppState.js";
+import { keepsService } from "../services/KeepsService.js";
+import { logger } from "../utils/Logger.js";
+import Pop from "../utils/Pop.js";
+
 export default {
   setup() {
-    return {}
+    async function getKeeps() {
+      try {
+        await keepsService.getKeeps();
+      } catch (error) {
+        logger.error(error);
+        Pop.error(error.message);
+      }
+    }
+    onMounted(() => {
+      getKeeps();
+    });
+    return {
+      keeps: computed(() => AppState.keeps)
+    };
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
-.home {
-  display: grid;
-  height: 80vh;
-  place-content: center;
-  text-align: center;
-  user-select: none;
+.masonry {
+  columns: 4;
+}
 
-  .home-card {
-    width: 50vw;
-
-    >img {
-      height: 200px;
-      max-width: 200px;
-      width: 100%;
-      object-fit: contain;
-      object-position: center;
-    }
+@media screen AND (max-width: 768px) {
+  .masonry {
+    columns: 2;
   }
 }
 </style>

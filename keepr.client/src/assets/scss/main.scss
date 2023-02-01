@@ -4,7 +4,7 @@
 @import "./_utilities.scss";
 @import "./loaders.scss";
 
-body{
+body {
   overscroll-behavior: none;
 }
 
@@ -30,6 +30,7 @@ select {
     &:valid {
       border: 1px solid $success;
     }
+
     &:invalid {
       border: 1px solid $danger;
     }
@@ -39,4 +40,9 @@ select {
 form:invalid button[type="submit"] {
   filter: grayscale(1);
   pointer-events: none;
+}
+
+.modal-backdrop {
+  opacity: .8 !important;
+  filter: blur(20px);
 }

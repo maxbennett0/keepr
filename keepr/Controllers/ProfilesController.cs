@@ -21,8 +21,15 @@ public class ProfilesController : ControllerBase
 
   public ActionResult<Profile> GetProfileById(string id)
   {
-    Profile profile = _profilesService.GetProfileById(id);
-    return Ok(profile);
+    try
+    {
+      Account profile = _profilesService.GetProfileById(id);
+      return Ok(profile);
+    }
+    catch (Exception e)
+    {
+      return BadRequest(e.Message);
+    }
   }
 
   [HttpGet("{id}/keeps")]

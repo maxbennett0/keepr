@@ -33,7 +33,69 @@ CREATE TABLE
 
 DROP TABLE vaults;
 
+INSERT INTO
+    vaults (
+        name,
+        description,
+        img,
+        `isPrivate`,
+        `creatorId`
+    )
+VALUES (
+        "joey",
+        "from friends",
+        "https://upload.wikimedia.org/wikipedia/en/d/da/Matt_LeBlanc_as_Joey_Tribbiani.jpg",
+        FALSE,
+        "638a4290b124aedd65c6ab55"
+    );
+
+INSERT INTO
+    accounts (
+        id,
+        email,
+        name,
+        picture,
+        `coverImg`
+    )
+VALUES (
+        "638a4290b124aedd65c6ab55",
+        "test@test.com",
+        "test",
+        "https://upload.wikimedia.org/wikipedia/en/d/da/Matt_LeBlanc_as_Joey_Tribbiani.jpg",
+        "https://static.wikia.nocookie.net/disney/images/c/c5/Toy-story2-disneyscreencaps.com-8243.jpg/revision/latest?cb=20130508003153"
+    );
+
 DROP TABLE keeps;
+
+INSERT INTO
+    keeps (
+        name,
+        description,
+        img,
+        `creatorId`
+    )
+VALUES (
+        "joey",
+        "from friends",
+        "https://upload.wikimedia.org/wikipedia/en/d/da/Matt_LeBlanc_as_Joey_Tribbiani.jpg",
+        "638a4290b124aedd65c6ab55"
+    );
+
+DROP TABLE accounts;
+
+DROP TABLE vaultkeeps;
+
+INSERT INTO
+    vaultkeeps (
+        `keepId`,
+        `vaultId`,
+        `creatorId`
+    )
+VALUES (
+        1,
+        1,
+        "638a4290b124aedd65c6ab55"
+    );
 
 CREATE TABLE
     vaultkeeps(
@@ -45,8 +107,6 @@ CREATE TABLE
         Foreign Key (vaultId) REFERENCES vaults(id) ON DELETE CASCADE,
         Foreign Key (keepId) REFERENCES keeps(id) ON DELETE CASCADE
     ) default charset utf8 COMMENT '';
-
-DROP TABLE vaultkeeps;
 
 SELECT keeps.*, vaultkeeps.*
 FROM vaultkeeps
@@ -60,9 +120,3 @@ FROM keeps
     JOIN accounts ON accounts.id = keeps.creatorId
 WHERE
     keeps.creatorId = "638a4290b124aedd65c6ab55";
-
-      SELECT
-    !`isPrivate`
-    FROM vaults
-    JOIN accounts ON accounts.id = vaults.creatorId
-    WHERE vaults.creatorId = "638a4290b124aedd65c6ab55";

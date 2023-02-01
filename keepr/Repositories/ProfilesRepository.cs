@@ -10,7 +10,7 @@ public class ProfilesRepository
   }
 
 
-  internal Profile GetProfileById(string accountId)
+  internal Account GetProfileById(string accountId)
   {
     string sql = @"
     SELECT
@@ -18,7 +18,7 @@ public class ProfilesRepository
     FROM accounts
     WHERE id = @accountId;
     ";
-    Profile profile = _db.Query<Profile>(sql, new { accountId }).FirstOrDefault();
+    Account profile = _db.Query<Account>(sql, new { accountId }).FirstOrDefault();
     return profile;
   }
 }
