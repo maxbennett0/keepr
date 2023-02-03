@@ -9,6 +9,12 @@ class VaultKeepsService {
     logger.log(res.data);
     AppState.profileVaultKeeps.push(res.data);
   }
+
+  async deleteVaultKeep(keepId) {
+    const res = await api.delete('api/vaultkeeps/' + keepId);
+    logger.log(res.data);
+    AppState.vaultKeeps = AppState.vaultKeeps.filter(v => v.keepId != keepId);
+  }
 }
 
 export const vaultKeepsService = new VaultKeepsService();

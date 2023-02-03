@@ -5,8 +5,8 @@
         <div
           class="d-flex flex-column justify-content-end align-items-center img-fluid vaultImg rounded my-3 elevation-2"
           :style="`background-image: url(${vault.img})`">
-          <h1 class="text-center d-flex my-4">{{ vault.name }}</h1>
-          <h6 class="text-center d-flex my-3">By: {{ vault.creator.name }}</h6>
+          <h1 class="text-center d-flex my-4 fw-bold fs-1">{{ vault.name }}</h1>
+          <h6 class="text-center d-flex my-3 fw-bold fs-1">By: {{ vault.creator.name }}</h6>
           <h1 v-if="account.id == vault.creatorId"><i class="mdi mdi-delete selectable"
               @click="deleteVault(vault.id)"></i></h1>
         </div>
@@ -14,7 +14,10 @@
       <h1 class="text-center">{{ profileVaultKeeps.length }} Keeps</h1>
     </div>
     <div class="row">
-      <div v-for="v in profileVaultKeeps" class="col-12 d-flex justify-content-center vaultKeep">
+      <div v-for="v in profileVaultKeeps" class="col-2 d-flex justify-content-center vaultKeep">
+        <div v-if="account.id == vault.creatorId" class="d-flex align-items-center">
+          <i class="mdi mdi-delete fs-3 selectable" title="Delete Vault Keep" @click="deleteVK(v.vaultKeepId)"></i>
+        </div>
         <KeepCard :keep="v" />
       </div>
     </div>
@@ -26,7 +29,7 @@
     </div>
   </div>
 </template>
-
+  
 
 <script>
 import { AppState } from '../AppState';
@@ -71,7 +74,19 @@ export default {
       account: computed(() => AppState.account),
       async deleteVault(vaultId) {
         try {
-          await vaultsService.deleteVault(vaultId);
+          if (await Pop.confirm("ayo mista white.. you really wanna delete this vault keep?", "this is insane yo")) {
+            await vaultsService.deleteVault(vaultId);
+          }
+        } catch (error) {
+          logger.error(error);
+          Pop.error(error.message);
+        }
+      },
+      async deleteVK(vkId) {
+        try {
+          if (await Pop.confirm("ayo mista white.. you really wanna delete this vault keep?", "this is insane yo")) {
+            await vaultKeepsService.deleteVaultKeep(vkId);
+          }
         } catch (error) {
           logger.error(error);
           Pop.error(error.message);

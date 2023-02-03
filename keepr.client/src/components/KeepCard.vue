@@ -3,7 +3,7 @@
     @click="setActive(keep.id), getAccountVaults()" data-bs-toggle="modal" data-bs-target="#keepDetails">
     <img :src="keep.img" class="card-img rounded-4" alt="...">
     <div class="card-img-overlay d-flex align-items-end justify-content-between">
-      <h5 class="card-title text-shadow mx-2">{{ keep.name }}</h5>
+      <h5 class="card-title text-shadow mx-2 fw-bold">{{ keep.name }}</h5>
       <img :src="keep.creator.picture" height="40" width="40" class="person rounded-circle elevation-2" alt=""
         :title="keep.creator.name">
     </div>
@@ -58,5 +58,15 @@ export default {
 <style lang="scss" scoped>
 .card {
   position: relative;
+}
+
+@media screen AND (max-width: 768px) {
+  .person {
+    display: none;
+  }
+
+  .card-title {
+    display: none;
+  }
 }
 </style>

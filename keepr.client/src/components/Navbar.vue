@@ -11,15 +11,10 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
-        <li>
-          <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
-            About
-          </router-link>
-        </li>
         <button v-if="account.id != null" class="btn btn-secondary mx-2" data-bs-toggle="modal"
           data-bs-target="#createModal">Create
           Keep</button>
-        <button v-if="account.id != null" class="btn btn-secondary" data-bs-toggle="modal"
+        <button v-if="account.id != null" class="btn btn-secondary mx-2" data-bs-toggle="modal"
           data-bs-target="#createVault">Create
           Vault</button>
         <button v-if="account.id != null" class="btn btn-secondary" data-bs-toggle="modal"

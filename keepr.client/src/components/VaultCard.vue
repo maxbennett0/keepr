@@ -4,7 +4,7 @@
       <div class="selectable" @click="setActive(vault.id)">
         <router-link :to="{ name: 'VaultPage', params: { vaultId: vault.id } }">
           <div v-if="vault.isPrivate == false || vault.creatorId == account.id">
-            <img class="img-fluid rounded" :src="vault.img" alt="">
+            <img class="img-fluid rounded" :title="vault.name" :src="vault.img" alt="">
           </div>
         </router-link>
       </div>

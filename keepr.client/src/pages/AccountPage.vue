@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid" v-if="account">
+  <div class="container-fluid" v-if="account" @load="getProfileKeeps(account.id)">
     <div class="row">
       <div class="col-12 d-flex justify-content-center">
         <div class="p-5">
@@ -10,20 +10,18 @@
             <img class="img-fluid rounded-circle profileImg elevation-3" :src="account.picture" alt="">
           </div>
           <h1 class="text-center my-5">{{ account.name }}</h1>
-          <h4 class="text-center">{{ accountVaults.length }} Vaults | {{
-            profileKeeps.length
-          }} Keeps
+          <h4 class="text-center">{{ accountVaults.length }} Vaults | {{ profileKeeps.length }} Keeps
           </h4>
         </div>
       </div>
       <h1 class="my-4">Vaults:</h1>
-      <div class="col-12 d-flex">
+      <div v-if="accountVaults" class="col-12 d-flex">
         <div v-for="v in accountVaults" class="d-flex mx-2">
           <VaultCard :vault="v" />
         </div>
       </div>
       <h1 class="my-4">Keeps:</h1>
-      <div class="col-12 d-flex">
+      <div v-if="profileKeeps" class="col-12 d-flex">
         <div v-for="k in profileKeeps" class="d-flex mx-2">
           <ProfKeeps :keep="k" />
         </div>
@@ -68,7 +66,7 @@ export default {
           logger.error(error);
           Pop.error(error.message);
         }
-      }
+      },
     };
   }
 };

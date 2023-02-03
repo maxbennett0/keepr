@@ -31,6 +31,7 @@ import { AppState } from '../AppState';
 import { computed, reactive, onMounted, ref } from 'vue';
 import { accountService } from "../services/AccountService.js";
 import { logger } from "../utils/Logger.js";
+import { Modal } from "bootstrap";
 import Pop from "../utils/Pop.js";
 export default {
   setup() {
@@ -42,6 +43,7 @@ export default {
         try {
           let accountData = editable.value;
           await accountService.editAccount(accountId, accountData);
+          Modal.getOrCreateInstance('#editAccount').hide();
         } catch (error) {
           logger.error(error);
           Pop.error(error.message);
