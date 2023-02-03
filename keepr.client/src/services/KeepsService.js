@@ -17,6 +17,16 @@ class KeepsService {
       AppState.activeKeep.views++;
     }
   }
+  async createKeep(keepData) {
+    const res = await api.post('api/keeps', keepData);
+    logger.log('[CREATING KEEP]', keepData);
+    AppState.keeps.push(res.data);
+  }
+  async deleteKeep(keepId) {
+    const res = await api.delete('api/keeps/' + keepId);
+    logger.log('[DELETING KEEP]', res.data);
+    AppState.keeps = AppState.keeps.filter(k => k.id != keepId);
+  }
 }
 
 export const keepsService = new KeepsService();

@@ -16,6 +16,15 @@
             About
           </router-link>
         </li>
+        <button v-if="account.id != null" class="btn btn-secondary mx-2" data-bs-toggle="modal"
+          data-bs-target="#createModal">Create
+          Keep</button>
+        <button v-if="account.id != null" class="btn btn-secondary" data-bs-toggle="modal"
+          data-bs-target="#createVault">Create
+          Vault</button>
+        <button v-if="account.id != null" class="btn btn-secondary" data-bs-toggle="modal"
+          data-bs-target="#editAccount">Edit
+          Account</button>
       </ul>
       <!-- LOGIN COMPONENT HERE -->
       <Login />
@@ -24,10 +33,17 @@
 </template>
 
 <script>
+import { AppState } from "../AppState.js";
 import Login from './Login.vue';
+import { computed } from "vue";
+import { logger } from "../utils/Logger.js";
+import Pop from "../utils/Pop.js";
+import { accountService } from "../services/AccountService.js";
 export default {
   setup() {
-    return {};
+    return {
+      account: computed(() => AppState.account),
+    };
   },
   components: { Login }
 };

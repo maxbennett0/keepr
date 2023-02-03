@@ -1,6 +1,6 @@
 <template>
-  <div class="card text-white border-0 rounded-4 elevation-5 m-3 selectable hover" :title="keep.name"
-    @click="setActive(keep.id)" data-bs-toggle="modal" data-bs-target="#keepDetails">
+  <div v-if="keep" class="card text-white border-0 rounded-4 elevation-5 m-3 selectable hover" :title="keep.name"
+    @click="setActive(keep.id), getAccountVaults()" data-bs-toggle="modal" data-bs-target="#keepDetails">
     <img :src="keep.img" class="card-img rounded-4" alt="...">
     <div class="card-img-overlay d-flex align-items-end justify-content-between">
       <h5 class="card-title text-shadow mx-2">{{ keep.name }}</h5>
@@ -17,6 +17,8 @@ import { computed, reactive, onMounted } from 'vue';
 import { logger } from "../utils/Logger.js";
 import Pop from "../utils/Pop.js";
 import { keepsService } from "../services/KeepsService.js";
+import { profilesService } from "../services/ProfilesService.js";
+import { accountService } from "../services/AccountService.js";
 export default {
   props: {
     keep: { type: Object, required: true }
@@ -26,6 +28,22 @@ export default {
       async setActive(keepId) {
         try {
           await keepsService.getKeepDetails(keepId);
+        } catch (error) {
+          logger.error(error);
+          Pop.error(error.message);
+        }
+      },
+      async getProfileVaults(profileId) {
+        try {
+          await profilesService.getProfileVaults(profileId);
+        } catch (error) {
+          logger.error(error);
+          Pop.error(error.message);
+        }
+      },
+      async getAccountVaults() {
+        try {
+          await accountService.getMyVaults();
         } catch (error) {
           logger.error(error);
           Pop.error(error.message);

@@ -48,9 +48,14 @@ public class KeepsService
     Keep keep = _repo.GetOne(id);
     if (keep == null)
     {
-      throw new Exception($"there isnt a cult at this id: ${id}");
+      throw new Exception($"there isnt a keep at this id: ${id}");
     }
     keep.Views++;
+    _repo.Update(keep);
+    if (keep.CreatorId != userId)
+    {
+      Keep newKeep = _repo.GetOne(id);
+    }
     return keep;
   }
 

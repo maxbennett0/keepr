@@ -19,7 +19,7 @@ public class ProfilesController : ControllerBase
 
   [HttpGet("{id}")]
 
-  public ActionResult<Profile> GetProfileById(string id)
+  public ActionResult<Account> GetProfileById(string id)
   {
     try
     {

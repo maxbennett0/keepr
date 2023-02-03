@@ -90,6 +90,7 @@ public class KeepsRepository
     name = @name,
     description = @description,
     img = @img,
+    views = @views,
     kept = @kept
     WHERE id = @id;
     ";

@@ -9,7 +9,9 @@
     <ModalComponent id="keepDetails">
       <KeepDetails :keep="activeKeep" />
     </ModalComponent>
-    <!-- <ModalComponent id="createModal" /> -->
+    <CreateModal id="createModal" />
+    <CreateVault id="createVault" />
+    <EditAccount id="editAccount" />
   </footer>
 </template>
 

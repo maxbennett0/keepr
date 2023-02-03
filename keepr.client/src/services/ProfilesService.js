@@ -13,10 +13,12 @@ class ProfilesService {
   async getProfileVaults(profileId) {
     const res = await api.get('api/profiles/' + profileId + '/vaults');
     logger.log("[GETTING PROFILE VAULTS]", res.data);
+    AppState.profileVaults = res.data;
   }
   async getProfileKeeps(profileId) {
     const res = await api.get('api/profiles/' + profileId + '/keeps');
     logger.log("[GETTING PROFILE KEEPS]", res.data);
+    AppState.profileKeeps = res.data;
   }
 }
 

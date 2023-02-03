@@ -1,5 +1,5 @@
 <template>
-  <div v-if="keep" class="row justify-content-evenly align-content-center">
+  <div v-if="keep && accountVaults" class="row justify-content-evenly align-content-center">
     <div class="col-6 pm-0">
       <img class="img-fluid img-card rounded" :src="keep.img" alt="">
     </div>
@@ -20,19 +20,22 @@
       </div>
       <div class="row">
         <div class="col-6 d-flex justify-content-start align-items-center">
-          <div class="mx-2">
-            <select name="vaults" id="vaults">
-              <option value="yo mama">yo mama</option>
-              <option value="yo mama">yo mama</option>
-              <option value="yo mama">yo mama</option>
-              <option value="yo mama">yo mama</option>
+          <div class="mx-5">
+            <select v-model="editable.id" v-if="account" name="vaults" id="vaults">
+              <option v-for="v in accountVaults" :value="v.id">{{ v.name }}</option>
             </select>
+            <button class="btn btn-primary" @click="saveToVault(editable, keep.id)">Save</button>
           </div>
         </div>
         <div class="col-6 d-flex justify-content-end">
+          <div v-if="keep.creatorId == account.id" class="d-flex fs-4 mx-2 selectable" @click="deleteKeep(keep.id)">
+            <i class="mdi mdi-delete d-flex align-items-center"></i>
+            <h6 class="d-flex align-items-center text-center m-0">Delete</h6>
+          </div>
           <div>
             <router-link :to="{ name: 'ProfilePage', params: { profileId: keep.creatorId } }">
-              <img class="img-modal rounded-circle img-fluid mx-2" :src="keep.creator.picture" alt="">
+              <img class="img-modal rounded-circle img-fluid mx-2" :src="keep.creator.picture" alt=""
+                data-bs-dismiss="modal">
             </router-link>
           </div>
           <div class="d-flex align-items-center">
@@ -47,10 +50,15 @@
 
 <script>
 import { AppState } from '../AppState';
-import { computed, reactive, onMounted } from 'vue';
+import { computed, reactive, onMounted, ref } from 'vue';
 import Pop from "../utils/Pop.js";
 import { logger } from "../utils/Logger.js";
 import { vaultsService } from "../services/VaultsService.js";
+import { keepsService } from "../services/KeepsService.js";
+import { Modal } from "bootstrap";
+import { profilesService } from "../services/ProfilesService.js";
+import { vaultKeepsService } from "../services/VaultKeepsService.js";
+import { accountService } from "../services/AccountService.js";
 export default {
   props: {
     keep: {
@@ -58,7 +66,34 @@ export default {
     }
   },
   setup() {
+    const editable = ref({});
     return {
+      editable,
+      account: computed(() => AppState.account),
+      profileVaults: computed(() => AppState.profileVaults),
+      activeVault: computed(() => AppState.activeVault),
+      accountVaults: computed(() => AppState.accountVaults),
+      async deleteKeep(keepId) {
+        try {
+          await keepsService.deleteKeep(keepId);
+          Modal.getOrCreateInstance('#keepDetails').hide();
+        } catch (error) {
+          logger.error(error);
+          Pop.error(error.message);
+        }
+      },
+      async saveToVault(editable, keepId) {
+        try {
+          let vkData = {
+            vaultId: editable.id,
+            keepId: keepId
+          };
+          await vaultKeepsService.saveToVault(vkData);
+        } catch (error) {
+          logger.error(error);
+          Pop.error(error.message);
+        }
+      }
     };
   }
 };
