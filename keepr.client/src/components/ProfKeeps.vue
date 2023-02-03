@@ -1,9 +1,9 @@
 <template>
   <div class="row">
-    <div class="col-12 text-center ">
+    <div class="col-12 text-center">
       <div class="selectable text-center" @click="setActive(keep.id)" data-bs-toggle="modal"
         data-bs-target="#keepDetails">
-        <img class="img-fluid rounded mb-2" :src="keep.img" alt="">
+        <img class="img-fluid rounded img-card mb-2" :src="keep.img" alt="">
       </div>
     </div>
   </div>
@@ -41,5 +41,8 @@ export default {
 
 
 <style lang="scss" scoped>
-
+.img-card {
+  height: 20vh;
+  widows: 20vh;
+}
 </style>

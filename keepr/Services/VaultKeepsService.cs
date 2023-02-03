@@ -59,11 +59,14 @@ public class VaultKeepsService
   internal List<MyKeeps> GetKeepsInVault(int vaultId, string userId)
   {
     Vault vault = _vaultsService.GetOne(vaultId, userId);
-    if (vault.IsPrivate == true)
+    if (vault.IsPrivate == true && vault.CreatorId != userId)
     {
       throw new Exception("ITS PRIVATE DONT GO IN THERE AHHHHHHH");
     }
-    List<MyKeeps> keeps = _repo.GetKeepsInVault(vaultId);
-    return keeps;
+    else
+    {
+      List<MyKeeps> keeps = _repo.GetKeepsInVault(vaultId);
+      return keeps;
+    }
   }
 }

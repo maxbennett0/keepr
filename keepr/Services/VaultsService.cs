@@ -27,6 +27,12 @@ public class VaultsService
     return original;
   }
 
+  internal List<Vault> GetAccountVaults(string accountId)
+  {
+    List<Vault> vaults = _repo.GetAccountVaults(accountId);
+    return vaults;
+  }
+
   internal Vault GetOne(int id, string userId)
   {
     Vault vault = _repo.GetOne(id);
@@ -41,11 +47,15 @@ public class VaultsService
     return vault;
   }
 
-  internal List<Vault> GetProfileVaults(string accountId)
+  internal List<Vault> GetProfileVaults(string accountId, string userId)
   {
+    // find all the vaults with the creator id
+    // if the vault is private and you are not the user kick 
+    // else let them see the vault
     List<Vault> vaults = _repo.GetProfileVaults(accountId);
-    List<Vault> filtered = vaults.FindAll(v => v.IsPrivate == false || v.IsPrivate == true);
-    return filtered;
+    List<Vault> notPrivate = vaults.FindAll(v => v.IsPrivate != true);
+    return notPrivate;
+
   }
 
   internal string Remove(int id, string userId)

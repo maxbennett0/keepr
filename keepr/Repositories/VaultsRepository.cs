@@ -36,6 +36,27 @@ public class VaultsRepository
     return rows > 0;
   }
 
+  internal List<Vault> GetAccountVaults(string accountId)
+  {
+    string sql = @"
+    SELECT
+    *
+    FROM vaults
+    JOIN accounts ON accounts.id = vaults.creatorId
+    WHERE vaults.creatorId = @accountId;
+    ";
+    List<Vault> vaults = _db.Query<Vault, Profile, Vault>(sql, (vault, profile) =>
+    {
+      if (vault.IsPrivate == true)
+      {
+        vault.Creator = profile;
+        return vault;
+      }
+      return vault;
+    }, new { accountId }).ToList();
+    return vaults;
+  }
+
   internal Vault GetOne(int id)
   {
     string sql = @"

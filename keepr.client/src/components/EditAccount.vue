@@ -14,6 +14,11 @@
                 placeholder="Vault Image">
               <label for="coverImg">Account Picture</label>
             </div>
+            <div class="form-floating mb-3 elevation-5">
+              <input v-model="editable.coverImg" type="url" required class="form-control" id="img"
+                placeholder="Vault Image">
+              <label for="coverImg">Account Cover Image</label>
+            </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary">Edit Account</button>

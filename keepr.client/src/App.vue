@@ -19,6 +19,7 @@
 import { computed, onMounted } from 'vue';
 import { AppState } from './AppState';
 import Navbar from './components/Navbar.vue';
+import { accountService } from "./services/AccountService.js";
 import { keepsService } from "./services/KeepsService.js";
 import { logger } from "./utils/Logger.js";
 import Pop from "./utils/Pop.js";
@@ -39,7 +40,7 @@ export default {
     return {
       appState: computed(() => AppState),
       keeps: computed(() => AppState.keeps),
-      activeKeep: computed(() => AppState.activeKeep)
+      activeKeep: computed(() => AppState.activeKeep),
     };
   },
   components: { Navbar }

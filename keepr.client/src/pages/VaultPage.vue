@@ -1,14 +1,15 @@
 <template>
-  <div v-if="vault" class="container-fluid">
+  <div v-if="vault" class="container - fluid">
     <div class="row">
       <div class="col-12 d-flex justify-content-center">
         <div
           class="d-flex flex-column justify-content-end align-items-center img-fluid vaultImg rounded my-3 elevation-2"
           :style="`background-image: url(${vault.img})`">
-          <h1 class="text-center d-flex my-4 fw-bold fs-1">{{ vault.name }}</h1>
-          <h6 class="text-center d-flex my-3 fw-bold fs-1">By: {{ vault.creator.name }}</h6>
-          <h1 v-if="account.id == vault.creatorId"><i class="mdi mdi-delete selectable"
-              @click="deleteVault(vault.id)"></i></h1>
+          <h1 class="text-center d-flex my-4 fw-bold text-white text-shadow fs-1">{{ vault.name }}
+          </h1>
+          <h6 class="text-center d-flex my-3 fw-bold text-white text-shadow fs-1">By: {{ vault.creator.name }}</h6>
+          <h1 title="Delete Vault" v-if="account.id == vault.creatorId"><i
+              class="mdi mdi-delete selectable text-danger text-shadow" @click="deleteVault(vault.id)"></i></h1>
         </div>
       </div>
       <h1 class="text-center">{{ profileVaultKeeps.length }} Keeps</h1>
@@ -108,5 +109,9 @@ export default {
 
 .vaultKeep {
   object-fit: cover;
+}
+
+.text-shadow {
+  text-shadow: 2px 2px black;
 }
 </style>

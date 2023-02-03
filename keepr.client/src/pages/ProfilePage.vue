@@ -14,15 +14,19 @@
         </div>
       </div>
       <h1 class="my-4">Vaults:</h1>
-      <div class="col-12 d-flex">
-        <div v-for="v in profileVaults" class="d-flex mx-2">
-          <VaultCard :vault="v" />
+      <div v-if="profileVaults" class="col-12 d-flex flex-wrap">
+        <div v-for="v in profileVaults" class="row mx-2 ">
+          <div class="col-12 d-flex flex-wrap">
+            <VaultCard :vault="v" />
+          </div>
         </div>
       </div>
       <h1 class="my-4">Keeps:</h1>
       <div class="col-12 d-flex">
-        <div v-for="k in profileKeeps" class="d-flex mx-2">
-          <ProfKeeps :keep="k" />
+        <div v-if="profileKeeps" class="row mx-2 flex-wrap">
+          <div v-for="k in profileKeeps" class="col-4">
+            <ProfKeeps :keep="k" />
+          </div>
         </div>
       </div>
     </div>

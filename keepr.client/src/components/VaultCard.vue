@@ -4,9 +4,12 @@
       <div class="selectable" @click="setActive(vault.id)">
         <router-link :to="{ name: 'VaultPage', params: { vaultId: vault.id } }">
           <div v-if="vault.isPrivate == false || vault.creatorId == account.id">
-            <img class="img-fluid rounded" :title="vault.name" :src="vault.img" alt="">
+            <img class="img-fluid img-card rounded" :title="vault.name" :src="vault.img" alt="">
           </div>
         </router-link>
+        <h1 class="text-center fs-3">{{ vault.name }}
+          <i v-if="vault.isPrivate" class="mdi mdi-lock"></i>
+        </h1>
       </div>
     </div>
   </div>
@@ -43,5 +46,8 @@ export default {
 
 
 <style lang="scss" scoped>
-
+.img-card {
+  height: 20vh;
+  widows: 20vh;
+}
 </style>

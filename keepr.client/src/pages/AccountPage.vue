@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid" v-if="account" @load="getProfileKeeps(account.id)">
+  <div class="container-fluid" v-if="account" @load="getProfileKeeps">
     <div class="row">
       <div class="col-12 d-flex justify-content-center">
         <div class="p-5">
@@ -15,14 +15,14 @@
         </div>
       </div>
       <h1 class="my-4">Vaults:</h1>
-      <div v-if="accountVaults" class="col-12 d-flex">
+      <div v-if="accountVaults" class="col-12 d-flex flex-wrap">
         <div v-for="v in accountVaults" class="d-flex mx-2">
           <VaultCard :vault="v" />
         </div>
       </div>
       <h1 class="my-4">Keeps:</h1>
-      <div v-if="profileKeeps" class="col-12 d-flex">
-        <div v-for="k in profileKeeps" class="d-flex mx-2">
+      <div v-if="profileKeeps" class="row mx-2">
+        <div v-for="k in profileKeeps" class="col-4 d-flex">
           <ProfKeeps :keep="k" />
         </div>
       </div>
@@ -51,22 +51,24 @@ export default {
         Pop.error(error.message);
       }
     }
+    async function getProfileKeeps() {
+      try {
+        await profilesService.getProfileKeeps(AppState.user.id);
+      } catch (error) {
+        logger.error(error);
+        Pop.error(error.message);
+      }
+    }
     onMounted(() => {
       getMyVaults();
+      getProfileKeeps();
     });
     return {
       activeProfile: computed(() => AppState.activeProfile),
       account: computed(() => AppState.account),
       accountVaults: computed(() => AppState.accountVaults),
       profileKeeps: computed(() => AppState.profileKeeps),
-      async getProfileKeeps(accountId) {
-        try {
-          await profilesService.getProfileKeeps(accountId);
-        } catch (error) {
-          logger.error(error);
-          Pop.error(error.message);
-        }
-      },
+
     };
   }
 };

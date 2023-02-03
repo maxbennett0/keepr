@@ -16,6 +16,7 @@ class ProfilesService {
     AppState.profileVaults = res.data;
   }
   async getProfileKeeps(profileId) {
+    logger.log(profileId);
     const res = await api.get('api/profiles/' + profileId + '/keeps');
     logger.log("[GETTING PROFILE KEEPS]", res.data);
     AppState.profileKeeps = res.data;
